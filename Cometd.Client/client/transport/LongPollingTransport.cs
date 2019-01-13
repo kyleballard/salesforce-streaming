@@ -216,8 +216,7 @@ namespace Cometd.Client.Transport
                 exchange.listener.onSending(ObjectConverter.ToListOfIMessage(exchange.messages));
                 IAsyncResult result = (IAsyncResult)exchange.request.BeginGetResponse(new AsyncCallback(GetResponseCallback), exchange);
 
-                //long timeout = 120000;
-                long timeout = 220000;
+                long timeout = 120000;
                 ThreadPool.RegisterWaitForSingleObject(result.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), exchange, timeout, true);
 
                 exchange.isSending = false;
@@ -261,7 +260,8 @@ namespace Cometd.Client.Transport
             }
             catch (Exception e)
             {
-                exchange.listener.onException(e, ObjectConverter.ToListOfIMessage(exchange.messages));
+                if (!e.Message.Contains("operation has timed out")) // Supress timeout messages due to inactivity
+                   exchange.listener.onException(e, ObjectConverter.ToListOfIMessage(exchange.messages));
                 exchange.Dispose();
             }
         }

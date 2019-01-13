@@ -1,13 +1,14 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Hosting;
 using Salesforce.NetCore.Streaming.CLI.Infrastructure;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace Salesforce.NetCore.Streaming.CLI
 {
+    [HelpOption("-?")]
     class Program
     {
-        // TODO:  Fix timeout issue with LongPollingTransport line 245
-
         // TODO:  Accept command line parameters for event channel (required) and replayId (optional)
 
         // TODO:  Use replay feature to capture changes
@@ -19,11 +20,21 @@ namespace Salesforce.NetCore.Streaming.CLI
 
         // TODO:  Update blog on how to create a Push Topic
 
-        public static async Task Main(string[] args)
+        [Required]
+        [Option("-c|--channel", Description = "Event bus channel to subscribe to.")]
+        public string Channel { get; }
+
+        [Option("-r|--replay", Description = "ReplayId for starting point.")]
+        public string ReplayId { get; }
+
+
+        public static Task<int> Main(string[] args) => CommandLineApplication.ExecuteAsync<Program>(args);
+
+        private async Task OnExecuteAsync()
         {
             var host = new HostBuilder()
                  .ConfigureHostSettings()
-                 .ConfigureHostServices()
+                 .ConfigureHostServices(new CommandLineOptions(Channel, ReplayId))
                  .ConfigureHostLogging()
                  .UseConsoleLifetime()
                  .Build();

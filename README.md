@@ -24,7 +24,7 @@ dotnet run
 
 ## Credits
 
-The CometD.NET library in this project is a modified version of the [CometD.NET Library](https://github.com/Oyatel/CometD.NET) which works on versions of .NET prior to Core.  I made alterations to this, primarily around how Json serialization works to make it compatible with .NET Core.  Some additional modifications were also made to the library to enhance it.
+The [CometD.NET Library](https://github.com/Oyatel/CometD.NET) in this project is one which works on versions of .NET prior to Core.  I made alterations to this, primarily around how Json serialization works to make it compatible with .NET Core.  Some additional modifications were also made to the library to enhance it.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

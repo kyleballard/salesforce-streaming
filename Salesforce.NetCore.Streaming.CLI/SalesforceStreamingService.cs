@@ -16,23 +16,24 @@ namespace Salesforce.NetCore.Streaming.CLI
     {
         private readonly ILogger logger;
         private readonly IApplicationLifetime appLifetime;
+        private readonly CommandLineOptions cmdOptions;
         private readonly SalesforceClient salesforceClient;
-        private readonly SalesforceConfig options;
+        private readonly SalesforceConfig sfOptions;
         private BayeuxClient bayeuxClient;
         private int readTimeOut = 120 * 1000;
-        private string streamingEndpointURI = "/cometd/44.0";
-        private string channel = "/data/ChangeEvents";
 
         //private readonly IEventBus _eventBus;
 
         public SalesforceStreamingService(
             ILogger<SalesforceStreamingService> logger, IApplicationLifetime appLifetime,
-            IOptions<SalesforceConfig> options, SalesforceClient salesforceClient)
+            IOptions<SalesforceConfig> sfOptions, IOptions<CommandLineOptions> cmdOptions, 
+            SalesforceClient salesforceClient)
         {
             this.logger = logger;
             this.appLifetime = appLifetime;
             this.salesforceClient = salesforceClient;
-            this.options = options.Value;
+            this.sfOptions = sfOptions.Value;
+            this.cmdOptions = cmdOptions.Value;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -60,7 +61,7 @@ namespace Salesforce.NetCore.Streaming.CLI
 
             // only need the scheme and host, strip out the rest
             var serverUri = new Uri(authToken.InstanceUrl);
-            String endpoint = String.Format("{0}://{1}{2}", serverUri.Scheme, serverUri.Host, streamingEndpointURI);
+            String endpoint = String.Format("{0}://{1}{2}", serverUri.Scheme, serverUri.Host, sfOptions.StreamEndpoint);
             bayeuxClient = new BayeuxClient(endpoint, new[] { transport });
 
             logger.LogInformation("Handshaking with Change Data Capture stream...");
@@ -69,7 +70,7 @@ namespace Salesforce.NetCore.Streaming.CLI
 
             logger.LogInformation("Connected to Change Data Capture stream...");
 
-            bayeuxClient.getChannel(channel).subscribe(new Listener(logger));
+            bayeuxClient.getChannel(cmdOptions.Channel).subscribe(new Listener(logger));
             logger.LogInformation("Waiting for data from server...");
         }
 
