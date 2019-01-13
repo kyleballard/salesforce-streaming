@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Salesforce.NetCore.Streaming.CLI", "Salesforce.NetCore.Streaming.CLI\Salesforce.NetCore.Streaming.CLI.csproj", "{0F1A54B3-9B55-4FBB-9542-FCD9129C4812}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Salesforce.NetCore.Streaming.CLI", "Salesforce.NetCore.Streaming.CLI\Salesforce.NetCore.Streaming.CLI.csproj", "{0F1A54B3-9B55-4FBB-9542-FCD9129C4812}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cometd.Client", "Cometd.Client\Cometd.Client.csproj", "{308D42DF-2E1B-44D1-B836-A29FED1D3798}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cometd.Client", "Cometd.Client\Cometd.Client.csproj", "{308D42DF-2E1B-44D1-B836-A29FED1D3798}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{131A7349-460A-475B-A93F-42CCCB6D7501}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

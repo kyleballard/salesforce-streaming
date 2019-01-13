@@ -138,8 +138,6 @@ namespace Cometd.Client.Transport
 
         public override void send(ITransportListener listener, IList<IMutableMessage> messages)
         {
-            //Console.WriteLine();
-            //Console.WriteLine("send({0} message(s))", messages.Count);
             String url = getURL();
 
             if (_appendMessageType && messages.Count == 1 && messages[0].Meta)
@@ -208,7 +206,6 @@ namespace Cometd.Client.Transport
                 {
                     // Convert the string into a byte array.
                     byte[] byteArray = Encoding.UTF8.GetBytes(exchange.content);
-                    //Console.WriteLine("Sending message(s): {0}", exchange.content);
 
                     // Write to the request stream.
                     postStream.Write(byteArray, 0, exchange.content.Length);
@@ -219,7 +216,8 @@ namespace Cometd.Client.Transport
                 exchange.listener.onSending(ObjectConverter.ToListOfIMessage(exchange.messages));
                 IAsyncResult result = (IAsyncResult)exchange.request.BeginGetResponse(new AsyncCallback(GetResponseCallback), exchange);
 
-                long timeout = 120000;
+                //long timeout = 120000;
+                long timeout = 220000;
                 ThreadPool.RegisterWaitForSingleObject(result.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), exchange, timeout, true);
 
                 exchange.isSending = false;
@@ -249,7 +247,6 @@ namespace Cometd.Client.Transport
                         using (StreamReader streamRead = new StreamReader(streamResponse))
                             responseString = streamRead.ReadToEnd();
                     }
-                    //Console.WriteLine("Received message(s): {0}", responseString);
 
                     if (response.Cookies != null)
                         foreach (Cookie cookie in response.Cookies)

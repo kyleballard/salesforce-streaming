@@ -21,7 +21,7 @@ namespace Salesforce.NetCore.Streaming.CLI
         private BayeuxClient bayeuxClient;
         private int readTimeOut = 120 * 1000;
         private string streamingEndpointURI = "/cometd/44.0";
-        private string channel = "/data/LeadChangeEvent";
+        private string channel = "/data/ChangeEvents";
 
         //private readonly IEventBus _eventBus;
 
@@ -43,10 +43,10 @@ namespace Salesforce.NetCore.Streaming.CLI
 
             logger.LogInformation("SalesforceStreamingService.StartAsync has been called.");
 
-            Console.WriteLine("Authenticating with Salesforce...");
+            logger.LogInformation("Authenticating with Salesforce...");
             var authToken = await salesforceClient.GetToken();
 
-            Console.WriteLine("Enabling Bayeux protocol...");
+            logger.LogInformation("Enabling Bayeux protocol...");
             var options = new Dictionary<String, Object>
             {
                { ClientTransport.TIMEOUT_OPTION, readTimeOut }
@@ -63,14 +63,14 @@ namespace Salesforce.NetCore.Streaming.CLI
             String endpoint = String.Format("{0}://{1}{2}", serverUri.Scheme, serverUri.Host, streamingEndpointURI);
             bayeuxClient = new BayeuxClient(endpoint, new[] { transport });
 
-            Console.WriteLine("Handshaking with Change Data Capture stream...");
+            logger.LogInformation("Handshaking with Change Data Capture stream...");
             bayeuxClient.handshake();
             bayeuxClient.waitFor(1000, new[] { BayeuxClient.State.CONNECTED });
 
-            Console.WriteLine("Connected to Change Data Capture stream...");
+            logger.LogInformation("Connected to Change Data Capture stream...");
 
-            bayeuxClient.getChannel(channel).subscribe(new Listener());
-            Console.WriteLine("Waiting for data from server...");
+            bayeuxClient.getChannel(channel).subscribe(new Listener(logger));
+            logger.LogInformation("Waiting for data from server...");
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
@@ -79,7 +79,7 @@ namespace Salesforce.NetCore.Streaming.CLI
             await Task.Factory.StartNew(() =>
             {
                 logger.LogInformation("SalesforceStreamingService.StopAsync has been called.");
-                Console.WriteLine("Disconnecting from Salesforce...");
+                logger.LogInformation("Disconnecting from Salesforce...");
                 bayeuxClient.disconnect();
                 bayeuxClient.waitFor(1000, new[] { BayeuxClient.State.DISCONNECTED });
             });

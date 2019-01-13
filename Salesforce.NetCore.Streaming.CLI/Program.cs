@@ -6,16 +6,18 @@ namespace Salesforce.NetCore.Streaming.CLI
 {
     class Program
     {
-        // TODO:  Update blog on how to create a Push Topic
+        // TODO:  Fix timeout issue with LongPollingTransport line 245
 
-        // TODO:  Store Audit log of records 
+        // TODO:  Accept command line parameters for event channel (required) and replayId (optional)
 
         // TODO:  Use replay feature to capture changes
 
-        // TODO:  Job to purge records over X days old.
+        // TODO:  Tighten up code, add comments
 
         // TODO:  Check the DictionaryMessage (Advice property) for any error messages connecting during handshake
         //         and throw an exception for those.
+
+        // TODO:  Update blog on how to create a Push Topic
 
         public static async Task Main(string[] args)
         {
