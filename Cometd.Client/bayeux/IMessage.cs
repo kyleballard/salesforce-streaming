@@ -36,7 +36,9 @@ namespace Cometd.Bayeux
 		public const String RECONNECT_RETRY_VALUE = "retry";
 		public const String RECONNECT_HANDSHAKE_VALUE = "handshake";
 		public const String RECONNECT_NONE_VALUE = "none";
-	}
+        public const String REPLAY_ID_FIELD = "replay";
+
+    }
 
 	public interface IMessage : IDictionary<String, Object>
 	{
@@ -146,5 +148,9 @@ namespace Cometd.Bayeux
 		/// <param name="successful">the successfulness of this message
 		/// </param>
 		new bool Successful { get; set; }
-	}
+
+        /// <param name="replayid">the replayid of this message
+        /// </param>
+        new String Replay { get; set; }
+    }
 }

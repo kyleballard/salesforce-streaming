@@ -14,5 +14,6 @@ namespace Salesforce.NetCore.Streaming.CLI.Infrastructure
         public string ClientSecret { get; set; }
         public string LoginUrl { get; set; }
         public string StreamEndpoint { get; set; }
+        public string Channel { get; set; }
     }
 }

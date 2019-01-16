@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Salesforce.NetCore.Streaming.CLI": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -8,7 +8,7 @@ namespace Salesforce.NetCore.Streaming.CLI.Infrastructure
 {
     public static class HostExtensions
     {
-        public static IHostBuilder ConfigureHostServices(this IHostBuilder builder, CommandLineOptions cmdOptions)
+        public static IHostBuilder ConfigureHostServices(this IHostBuilder builder)
         {
             builder.ConfigureServices((context, services) =>
             {
@@ -16,7 +16,6 @@ namespace Salesforce.NetCore.Streaming.CLI.Infrastructure
                 services.AddHttpClient<SalesforceClient>();
                 services.AddHostedService<SalesforceStreamingService>();
                 services.Configure<SalesforceConfig>(options => context.Configuration.GetSection("Salesforce").Bind(options));
-                services.Configure<CommandLineOptions>(options => options = cmdOptions);
             });
             return builder;
         }

@@ -10,6 +10,7 @@ using System.Threading;
 using Cometd.Bayeux;
 using Cometd.Common;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Cometd.Client.Transport
 {
@@ -73,6 +74,15 @@ namespace Cometd.Client.Transport
             {
                 listener = _listener;
                 messages = _messages;
+                //foreach(var msg in messages)
+                //{
+                //    if (msg.Channel == "/meta/subscribe")
+                //    {
+                //        msg.Replay = "{ \"/data/ChangeEvents\": 19593 }";
+                //        Console.WriteLine(msg.Channel);
+                //    }
+                    
+                //}
                 request = _request;
             }
 

@@ -107,6 +107,20 @@ namespace Cometd.Common
             }
         }
 
+        public String Replay
+        {
+            get
+            {
+                Object obj;
+                this.TryGetValue(Message_Fields.REPLAY_ID_FIELD, out obj);
+                return (String)obj;
+            }
+            set
+            {
+                this[Message_Fields.REPLAY_ID_FIELD] = value;
+            }
+        }
+
         public IDictionary<String, Object> Ext
         {
             get
