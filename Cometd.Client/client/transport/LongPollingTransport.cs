@@ -74,15 +74,6 @@ namespace Cometd.Client.Transport
             {
                 listener = _listener;
                 messages = _messages;
-                //foreach(var msg in messages)
-                //{
-                //    if (msg.Channel == "/meta/subscribe")
-                //    {
-                //        msg.Replay = "{ \"/data/ChangeEvents\": 19593 }";
-                //        Console.WriteLine(msg.Channel);
-                //    }
-                    
-                //}
                 request = _request;
             }
 
